@@ -19,9 +19,7 @@ const VideoPlayer = ({route, navigation}: any) => {
         'https://www.wisdomapp.in/api/v1/content/?page=1&limit=10',
       );
       const json = await response.json();
-      console.log(json.results[0])
       setCardsData([...cardsData, ...json.results])
-      return json.movies;
     } catch (error) {
       console.error(error);
     }  
