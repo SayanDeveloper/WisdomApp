@@ -1,34 +1,36 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import React from 'react'
 
+const ScreenWidth = Dimensions.get("screen").width
+
 interface VideoCardProps {
-  cardData: any,
-  onClick: any
+  item: any,
+  navigation?: any
 }
 
-const VideoCard = ({cardData, onClick} : VideoCardProps) => {
+const VideoCard = ({item, navigation} : VideoCardProps) => {
 
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.videoCard} onPress={onClick}>
+    <View style={styles.videoCard}>
       <Image 
-        source={{uri: cardData?.channel?.logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
+        source={{uri: item?.channel?.logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
         style={styles.thumbnail}
       />
       <View style={styles.cardFooter}>
         <Image 
-          source={{uri: cardData?.channel?.creator?.logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
+          source={{uri: item?.channel?.creator?.logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
           style={styles.channelLogo}
         />
         <View>
           <Text numberOfLines={2} style={styles.videoTitle}>
-            {cardData?.title}
+            {item?.title}
           </Text>
           <Text style={styles.channelName}>
-            {cardData?.channel?.channel_name}
+            {item?.channel?.channel_name}
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 
@@ -53,7 +55,8 @@ const styles = StyleSheet.create({
   },
   videoTitle: {
     color: 'white',
-    lineHeight: 25
+    lineHeight: 25,
+    width: ScreenWidth - 90
   },
   channelName: {
     color: '#aaa',

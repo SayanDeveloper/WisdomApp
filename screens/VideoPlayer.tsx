@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions, Image } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import YoutubePlayer from 'react-native-youtube-iframe';
 import WebView from 'react-native-webview';
@@ -26,14 +26,6 @@ const VideoPlayer = ({route, navigation}: any) => {
     }  
   }
 
-  const navigateToPlayer = (data: any) => {
-    navigation.navigate('VideoPlayer', {
-      logo: data.channel?.creator?.logo,
-      title: data.title,
-      video: data.video_id
-    })
-  }
-
   useEffect(() => {
     videoListFetcher()
   }, [])
@@ -45,12 +37,20 @@ const VideoPlayer = ({route, navigation}: any) => {
         play={true}
         videoId={video}
       />
-      <Text>{title}</Text>
+      <View style={styles.cardFooter}>
+        <Image 
+          source={{uri: logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
+          style={styles.channelLogo}
+        />
+        <Text numberOfLines={2} style={styles.videoTitle}>
+          {title}
+        </Text>
+      </View>
       <ScrollView style={styles.vidList}>
         <Text>Up Next</Text>
-        <VideoCard onClick={() => navigateToPlayer(cardsData[0])} cardData={cardsData[0]} />
-        <VideoCard onClick={() => navigateToPlayer(cardsData[1])} cardData={cardsData[1]} />
-        <VideoCard onClick={() => navigateToPlayer(cardsData[2])} cardData={cardsData[2]} />
+        <VideoCard item={cardsData[0]} />
+        <VideoCard item={cardsData[1]} />
+        <VideoCard item={cardsData[2]} />
       </ScrollView>
     </SafeAreaView>
   )
@@ -63,7 +63,25 @@ const styles = StyleSheet.create({
   },
   vidList: {
     paddingHorizontal: 17
-  }
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    gap: 15,
+    width: '100%',
+    paddingVertical: 20,
+    paddingHorizontal: 15
+  },
+  channelLogo: {
+    borderRadius: 45,
+    height: 45,
+    width: 45
+  },
+  videoTitle: {
+    color: 'white',
+    lineHeight: 25,
+    fontSize: 18,
+    width: ScreenWidth - 90
+  },
 })
 
 export default VideoPlayer
