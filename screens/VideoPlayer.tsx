@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions, Image } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions, Image, FlatList, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import YoutubePlayer from 'react-native-youtube-iframe';
 import WebView from 'react-native-webview';
@@ -10,7 +10,8 @@ const VideoPlayer = ({route, navigation}: any) => {
   const { logo, title, video } = route.params;
   console.log(video)
 
-  const [cardsData, setCardsData] = useState([])
+  const [cardsData, setCardsData] = useState<any>([])
+  const [page, setPage] = useState(1)
 
   const videoListFetcher = async () => {
     try {
@@ -19,16 +20,20 @@ const VideoPlayer = ({route, navigation}: any) => {
       );
       const json = await response.json();
       console.log(json.results[0])
-      setCardsData(json.results)
+      setCardsData([...cardsData, ...json.results])
       return json.movies;
     } catch (error) {
       console.error(error);
     }  
   }
 
+  const loadMoreCards = () => {
+    setPage(page+1)
+  }
+
   useEffect(() => {
     videoListFetcher()
-  }, [])
+  }, [page])
 
   return (
     <SafeAreaView style={styles.totalContainer}>
@@ -46,12 +51,28 @@ const VideoPlayer = ({route, navigation}: any) => {
           {title}
         </Text>
       </View>
-      <ScrollView style={styles.vidList}>
-        <Text>Up Next</Text>
-        <VideoCard item={cardsData[0]} />
-        <VideoCard item={cardsData[1]} />
-        <VideoCard item={cardsData[2]} />
-      </ScrollView>
+      <Text style={styles.upNext}>Up Next</Text>
+      <FlatList 
+        data={cardsData}
+        renderItem={({item, i}:any) => (
+          <TouchableOpacity 
+            activeOpacity={0.7}
+            key={i}
+            onPress={() => {
+              navigation.navigate("VideoPlayer", {
+                logo: item.channel?.creator?.logo,
+                title: item.title,
+                video: item.video_id
+              })
+            }} 
+            style={styles.videoCard}
+          >
+            <VideoCard item={item} />
+          </TouchableOpacity>
+        )}
+        onEndReached={loadMoreCards}
+        style={styles.totalContainer}
+      />
     </SafeAreaView>
   )
 }
@@ -59,10 +80,8 @@ const VideoPlayer = ({route, navigation}: any) => {
 const styles = StyleSheet.create({
   totalContainer: {
     backgroundColor: '#000',
-    flex: 1
-  },
-  vidList: {
-    paddingHorizontal: 17
+    flex: 1,
+    paddingHorizontal: 8
   },
   cardFooter: {
     flexDirection: 'row',
@@ -81,6 +100,16 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontSize: 18,
     width: ScreenWidth - 90
+  },
+  upNext: {
+    color: 'white',
+    fontSize: 17,
+    marginTop: 10,
+    marginBottom: 17,
+    paddingLeft: 10
+  },
+  videoCard: {
+    paddingBottom: 4
   },
 })
 

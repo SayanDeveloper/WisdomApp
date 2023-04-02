@@ -27,19 +27,15 @@ const Home = ({navigation}: any) => {
 
   useEffect(() => {
     videoListFetcher()
-  }, [])
-
-  useEffect(() => {
-    videoListFetcher()
   }, [page])
 
   return (
     <SafeAreaView style={styles.totalContainer}>
-        <Text>Up Next</Text>
         <FlatList 
           data={cardsData}
           renderItem={({item, i}:any) => (
             <TouchableOpacity 
+              activeOpacity={0.7}
               key={i}
               onPress={() => {
                 navigation.navigate("VideoPlayer", {
