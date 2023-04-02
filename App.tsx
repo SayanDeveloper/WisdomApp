@@ -1,9 +1,13 @@
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import VideoCard from './components/VideoCard'
 import axios from 'axios'
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './screens/Home';
+import VideoPlayer from './screens/VideoPlayer';
 
-const screenHeight = Dimensions.get("screen").height
+const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
 
@@ -27,25 +31,32 @@ function App(): JSX.Element {
     videoListFetcher()
   }, [])
   return (
-    <SafeAreaView style={styles.totalContainer}>
-      <ScrollView style={styles.vidList}>
-        <Text>Up Next</Text>
-        <VideoCard cardData={cardsData[0]} />
-        <VideoCard cardData={cardsData[1]} />
-        <VideoCard cardData={cardsData[2]} />
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            title: 'Wisdom'
+          }}
+        />
+        <Stack.Screen 
+          name="VideoPlayer" 
+          component={VideoPlayer}
+          options={{
+            title: '',
+            headerRight: () => (
+              <Button
+                onPress={() => console.log('This is a button!')}
+                title="Share"
+                color="#000"
+              />
+            )
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  totalContainer: {
-    backgroundColor: '#000',
-    flex: 1
-  },
-  vidList: {
-    paddingHorizontal: 17
-  }
-})
 
 export default App

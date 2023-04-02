@@ -1,14 +1,15 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 interface VideoCardProps {
-  cardData: any
+  cardData: any,
+  onClick: any
 }
 
-const VideoCard = ({cardData} : VideoCardProps) => {
+const VideoCard = ({cardData, onClick} : VideoCardProps) => {
 
   return (
-    <View style={styles.videoCard}>
+    <TouchableOpacity activeOpacity={0.7} style={styles.videoCard} onPress={onClick}>
       <Image 
         source={{uri: cardData?.channel?.logo || "https://widsom-media.s3.ap-south-1.amazonaws.com/images/creators-images/buddha_inspired.jpeg"}} 
         style={styles.thumbnail}
@@ -27,7 +28,7 @@ const VideoCard = ({cardData} : VideoCardProps) => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
