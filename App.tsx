@@ -1,4 +1,4 @@
-import { Button, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import VideoCard from './components/VideoCard'
 import axios from 'axios'
@@ -27,11 +27,10 @@ function App(): JSX.Element {
           options={{
             title: '',
             headerRight: () => (
-              <Button
-                onPress={() => console.log('This is a button!')}
-                title="Share"
-                color="#000"
-              />
+              <TouchableOpacity activeOpacity={0.8} style={styles.shareButton}>
+                <Image source={require('./assets/whatsapp.png')} style={styles.whatsappLogo} />
+                <Text style={styles.shareText}>Share</Text>
+              </TouchableOpacity>
             )
           }}
         />
@@ -39,5 +38,26 @@ function App(): JSX.Element {
     </NavigationContainer>
   )
 }
+
+const styles = StyleSheet.create({
+  shareButton: {
+    borderColor: '#444',
+    borderWidth: 1,
+    padding: 5,
+    paddingHorizontal: 10,
+    borderRadius: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6
+  },
+  shareText: {
+    color: 'white',
+    fontSize: 16
+  },
+  whatsappLogo: {
+    width: 25,
+    height: 25
+  }
+})
 
 export default App
