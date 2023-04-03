@@ -1,6 +1,8 @@
 <h1 align="center">Wisdom App</h1>
 
-<img src="https://user-images.githubusercontent.com/67837886/229518034-ec3b1358-624d-4d74-96dd-442effd723eb.png" align="center" />
+<p align="center">
+<img src="https://user-images.githubusercontent.com/67837886/229518034-ec3b1358-624d-4d74-96dd-442effd723eb.png" width="200px" />
+</p>
 
 
 ### App Download Link - https://github.com/SayanDeveloper/WisdomApp/releases/download/0.0.1/WisdomApp.apk
