@@ -4660,6 +4660,11 @@
     "import-local" "^3.0.2"
     "jest-cli" "^29.5.0"
 
+"jetifier@^2.0.0":
+  "integrity" "sha512-J4Au9KuT74te+PCCCHKgAjyLlEa+2VyIAEPNCdE5aNkAJ6FAJcAqcdzEkSnzNksIa9NkGmC4tPiClk2e7tCJuQ=="
+  "resolved" "https://registry.npmjs.org/jetifier/-/jetifier-2.0.0.tgz"
+  "version" "2.0.0"
+
 "joi@^17.2.1":
   "integrity" "sha512-FariIi9j6QODKATGBrEX7HZcja8Bsh3rfdGYy/Sb65sGlZWK/QWesU1ghk7aJWDj95knjXlQfSmzFSPPkLVsfw=="
   "resolved" "https://registry.npmjs.org/joi/-/joi-17.9.1.tgz"
